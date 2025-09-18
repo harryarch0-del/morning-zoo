@@ -176,14 +176,12 @@
 
     let currentIndex = 0;
 
-    function showZoo() {
-  document.getElementById("enterZoo").addEventListener("click", () => {
+    function startZoo() {
   document.getElementById("frontPage").classList.remove("active");
   document.getElementById("zooPage").classList.add("active");
 
   const music = document.getElementById("zooMusic");
   music.play().catch(err => console.log("Autoplay blocked:", err));
-});
     }
 
     function nextAnimal() {
