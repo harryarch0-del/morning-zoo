@@ -14,6 +14,29 @@
       animation: gradientShift 12s ease infinite;
       overflow: hidden;
     }
+  #enterZoo {
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  color: #2d2d2d;
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 2rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+#enterZoo:hover {
+  transform: scale(1.05) rotate(-1deg);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+
+#enterZoo:active {
+  transform: scale(0.97);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
 
     @keyframes gradientShift {
       0% { background-position: 0% 50%; }
