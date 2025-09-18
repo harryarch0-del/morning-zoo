@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Morning Zoo 🎨</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Caveat', cursive;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7, #f6d365, #fda085);
+      background-size: 300% 300%;
+      animation: gradientShift 12s ease infinite;
+      overflow: hidden;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .page {
+      display: none;
+      height: 100vh;
+      width: 100%;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .active {
+      display: flex;
+    }
+
+    h1 {
+      font-family: 'Amatic SC', cursive;
+      font-size: 2.8rem;
+      color: #fff;
+      text-shadow: 2px 2px 6px rgba(0,0,0,0.2);
+      margin-bottom: 2rem;
+    }
+
+    .button {
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 1.2rem;
+      background: rgba(255,255,255,0.85);
+      color: #444;
+      font-size: 1.3rem;
+      font-family: 'Caveat', cursive;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.3s ease;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+    .button:hover {
+      transform: scale(1.05);
+      background: #fff;
+    }
+
+    .canvas {
+      position: relative;
+      text-align: center;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 2rem;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+      max-width: 500px;
+      width: 90%;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    .animal {
+      font-size: 4.5rem;
+      animation: pop 0.6s ease;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0.5) rotate(-20deg); opacity: 0; }
+      100% { transform: scale(1) rotate(0); opacity: 1; }
+    }
+
+    .bubble {
+      background: white;
+      padding: 1rem 1.3rem;
+      border-radius: 1.5rem;
+      display: inline-block;
+      font-size: 1.5rem;
+      margin: 1rem 0;
+      position: relative;
+      box-shadow: 3px 4px 12px rgba(0,0,0,0.15);
+      font-family: 'Amatic SC', cursive;
+    }
+
+    .bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border: 12px solid transparent;
+      border-top-color: white;
+    }
+
+    .decor {
+      position: absolute;
+      font-size: 1.8rem;
+      opacity: 0.6;
+      animation: drift 12s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes drift {
+      from { transform: translateY(100vh) rotate(0); opacity: 0; }
+      10% { opacity: 0.8; }
+      to { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2.2rem; }
+      .animal { font-size: 3.5rem; }
+      .bubble { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Front Page -->
+  <div id="frontPage" class="page active">
+    <h1>Good Morning my sweet pumpkin 🎃</h1>
+    <button class="button" onclick="showZoo()">Enter the Zoo 🐾</button>
+  </div>
+
+  <!-- Zoo Page -->
+  <div id="zooPage" class="page">
+    <div class="canvas">
+      <div id="animal" class="animal">🦆</div>
+      <div id="message" class="bubble">Quack! Morning vibes splashed on your canvas 🎨</div>
+      <button class="button" onclick="nextAnimal()">Next Morning Friend 🌞</button>
+    </div>
+  </div>
+
+  <script>
+    const animals = [
+      { icon: "🦆", text: "Quack! Morning vibes splashed on your canvas 🎨" },
+      { icon: "🐱", text: "I painted your dreams, now wake up and see them ✨" },
+      { icon: "🐶", text: "Zoomies of inspiration racing to you this morning! 🐾" },
+      { icon: "🦥", text: "Art takes time… so do mornings. Stretch into it 🌿" },
+      { icon: "🐧", text: "Sliding into the day with pastel skies just for you 🌅" },
+      { icon: "🦊", text: "Foxy little good morning — clever ideas await 🦊" },
+      { icon: "🐻", text: "Bear hugs and sunshine to start your day ☀️🤗" },
+      { icon: "🦄", text: "GAYYY ANIMAL NOTHING TO SAYYY 🌈🦄" },
+      { icon: "🐸", text: "Hop into today with froggy energy! 🐸💚" },
+      { icon: "🦉", text: "Hoot hoot! Wisdom’s here to guide your morning 🌙🦉" },
+      { icon: "🧚‍♀️", text: "Visit Again, Fairy 🐋, BTW you damn fine tho 🤤" }
+    ];
+
+    let currentIndex = 0;
+
+    function showZoo() {
+      document.getElementById("frontPage").classList.remove("active");
+      document.getElementById("zooPage").classList.add("active");
+    }
+
+    function nextAnimal() {
+      currentIndex = (currentIndex + 1) % animals.length;
+      const chosen = animals[currentIndex];
+      document.getElementById("animal").textContent = chosen.icon;
+      document.getElementById("message").textContent = chosen.text;
+    }
+
+    // floating doodles on both pages
+    const decorIcons = ["⭐", "🌸", "💫", "🌼", "✨", "☁️","❤️"];
+    for(let i=0; i<25; i++){
+      const el = document.createElement("div");
+      el.className = "decor";
+      el.textContent = decorIcons[Math.floor(Math.random()*decorIcons.length)];
+      el.style.left = Math.random()*100+"vw";
+      el.style.animationDuration = (8+Math.random()*10)+"s";
+      document.body.appendChild(el);
+    }
+  </script>
+</body>
+</html>
